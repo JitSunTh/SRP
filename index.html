@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Data Collection Form with Participants Table</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f8f9fa;
+  }
+
+  /* Form styles */
+  .form-header {
+    font-weight: bold;
+    font-size: 35px;
+    margin-bottom: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #333;
+  }
+
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 15px;
+  }
+
+  .form-row label {
+    white-space: nowrap;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  select {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  input[type="text"]:focus,
+  input[type="date"]:focus,
+  input[type="number"]:focus,
+  select:focus {
+    border-color: #007BFF;
+  }
+
+  /* Smaller inputs */
+  .small-input {
+    width: 100px;
+    min-width: 80px;
+  }
+
+  /* For the "Name of the Teacher(s)" line */
+  .form-row.teacher-row {
+    gap: 10px;
+  }
+
+  .form-row.teacher-row label {
+    flex: 0 0 auto;
+  }
+
+  .form-row.teacher-row input[type="text"] {
+    flex-grow: 1;
+    min-width: 0;
+    width: auto;
+  }
+
+  /* Participants Table styles */
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-top: 40px;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .controls button {
+    padding: 8px 14px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .controls button:hover {
+    background-color: #0056b3;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .delete-btn:hover {
+    background-color: #b02a37;
+  }
+
+  /* Comment box styles */
+  #comments-container {
+    margin-top: 30px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #comments-container label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  #user-comments {
+    width: 100%;
+    height: 180px;
+    padding: 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Download button container */
+  #download-container {
+  max-width: 900px;
+  margin: 20px auto 0 auto;
+  text-align: center;  /* Center the button */
+}
+
+#download-container button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#download-container button:hover {
+  background-color: #0056b3;
+}
+</style>
+</head>
+<body>
+
+<!-- Data Collection Form -->
+<div class="form-header">DATA COLLECTION FORM - CHILDREN’S CLASS</div>
+
+<div class="form-row" style="justify-content: flex-end;">
+  <label for="todays-date">Today's Date:</label>
+  <input type="date" id="todays-date" name="todays-date" class="small-input" />
+</div>
+
+<div class="form-row">
+  <label for="cluster">Cluster:</label>
+  <input type="text" id="cluster" name="cluster" />
+
+  <label for="locality">Locality:</label>
+  <input type="text" id="locality" name="locality" />
+
+  <label for="neighbourhood">Focus Neighbourhood:</label>
+  <input type="text" id="neighbourhood" name="neighbourhood" />
+</div>
+
+<div class="form-row teacher-row">
+  <label for="teacher">Name of the Teacher(s):</label>
+  <input type="text" id="teacher" name="teacher" />
+</div>
+
+<div class="form-row">
+  <label for="grade">Grade:</label>
+  <select id="grade" name="grade" class="small-input">
+    <option value="" disabled selected>Select grade</option>
+    <option value="1">Grade 1</option>
+    <option value="2">Grade 2</option>
+    <option value="3">Grade 3</option>
+    <option value="4">Grade 4</option>
+    <option value="5">Grade 5</option>
+    <option value="6">Grade 6</option>
+  </select>
+
+  <label for="start-date">Start Date:</label>
+  <input type="date" id="start-date" name="start-date" class="small-input" />
+
+  <label for="end-date">End Date:</label>
+  <input type="date" id="end-date" name="end-date" class="small-input" />
+</div>
+
+<div class="form-row">
+  <label for="total-participants">Total no. of Participants:</label>
+  <input type="number" id="total-participants" name="total-participants" class="small-input" min="0" />
+  
+  <label for="baha-participants">No. of Baha’i Participants:</label>
+  <input type="number" id="baha-participants" name="baha-participants" class="small-input" min="0" />
+</div>
+
+<!-- Participants Table -->
+<h2>Participants Information</h2>
+
+<div class="controls">
+  <button onclick="addRow()">Add Row</button>
+</div>
+
+<table id="participantsTable">
+  <thead>
+    <tr>
+      <th>Sl. No.</th>
+      <th>First Name</th>
+      <th>Family Name</th>
+      <th>Gender</th>
+      <th>Age/DOB</th>
+      <th>Baha'i (Y/N)</th>
+      <th>Locality</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<!-- Comment Section -->
+<div id="comments-container">
+  <label for="user-comments">Your Comments / Sayings:</label>
+  <textarea id="user-comments" name="user-comments" rows="8" placeholder="Write your comments or sayings about this form here..."></textarea>
+</div>
+
+<!-- Download PDF Button Below Comments -->
+<div id="download-container">
+  <button onclick="window.print()">Download PDF</button>
+</div>
+
+<script>
+// Generate rows based on "Total no. of Participants"
+const totalParticipantsInput = document.getElementById('total-participants');
+totalParticipantsInput.addEventListener('input', () => {
+  let num = parseInt(totalParticipantsInput.value);
+  if (isNaN(num) || num < 0) num = 0;
+
+  const tbody = document.getElementById('participantsTable').querySelector('tbody');
+  const currentRows = tbody.rows.length;
+
+  if (num > currentRows) {
+    // Add rows if needed
+    for (let i = currentRows; i < num; i++) {
+      addRow();
+    }
+  } else if (num < currentRows) {
+    // Remove rows if needed
+    for (let i = currentRows; i > num; i--) {
+      tbody.deleteRow(i - 1);
+    }
+    updateSerialNumbers();
+  }
+});
+
+function addRow() {
+  const tbody = document.getElementById("participantsTable").querySelector("tbody");
+  const row = tbody.insertRow();
+
+  // Serial number
+  row.insertCell(0).innerText = tbody.rows.length;
+
+  // First Name
+  let firstName = document.createElement("input");
+  firstName.type = "text";
+  row.insertCell(1).appendChild(firstName);
+
+  // Family Name
+  let familyName = document.createElement("input");
+  familyName.type = "text";
+  row.insertCell(2).appendChild(familyName);
+
+  // Gender dropdown (only "", Male, Female)
+  let gender = document.createElement("select");
+  ["", "Male", "Female"].forEach(opt => {
+    let option = document.createElement("option");
+    option.value = opt;
+    option.text = opt;
+    gender.appendChild(option);
+  });
+  row.insertCell(3).appendChild(gender);
+
+  // Age/DOB text input
+  let ageDob = document.createElement("input");
+  ageDob.type = "text";
+  ageDob.placeholder = "Age or DOB";
+  row.insertCell(4).appendChild(ageDob);
+
+  // Baha'i dropdown
+  let bahai = document.createElement("select");
+  ["", "Yes", "No"].forEach(opt => {
+    let option = document.createElement("option");
+    option.value = opt;
+    option.text = opt;
+    bahai.appendChild(option);
+  });
+  row.insertCell(5).appendChild(bahai);
+
+  // Locality
+  let locality = document.createElement("input");
+  locality.type = "text";
+  row.insertCell(6).appendChild(locality);
+
+  // Delete button
+  let deleteBtn = document.createElement("button");
+  deleteBtn.innerText = "Delete";
+  deleteBtn.className = "delete-btn";
+  deleteBtn.onclick = function() {
+    row.remove();
+    updateSerialNumbers();
+    totalParticipantsInput.value = document.getElementById('participantsTable').querySelector('tbody').rows.length;
+  };
+  row.insertCell(7).appendChild(deleteBtn);
+}
+
+function updateSerialNumbers() {
+  const tbody = document.getElementById("participantsTable").querySelector("tbody");
+  for (let i = 0; i < tbody.rows.length; i++) {
+    tbody.rows[i].cells[0].innerText = i + 1;
+  }
+}
+</script>
+
+</body>
+</html>
